@@ -4,13 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84b9466d-6e48-40f2-8d0f-6027cdeaff16" name="Changes" comment="undestanding with comments">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="84b9466d-6e48-40f2-8d0f-6027cdeaff16" name="Changes" comment="undestanding with comments" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" show_ignored="true">
+    <option name="groupingKeys">
+      <option value="directory" />
+      <option value="repository" />
+    </option>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -114,7 +118,7 @@
       <workItem from="1764658630068" duration="5106000" />
       <workItem from="1765329778418" duration="5942000" />
       <workItem from="1765349779081" duration="6400000" />
-      <workItem from="1765419994752" duration="11949000" />
+      <workItem from="1765419994752" duration="12352000" />
     </task>
     <task id="LOCAL-00001" summary="undestanding with comments">
       <option name="closed" value="true" />
@@ -132,7 +136,23 @@
       <option name="project" value="LOCAL" />
       <updated>1765465510465</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="undestanding with comments">
+      <option name="closed" value="true" />
+      <created>1765466553278</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1765466553278</updated>
+    </task>
+    <task id="LOCAL-00004" summary="undestanding with comments">
+      <option name="closed" value="true" />
+      <created>1765466700968</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1765466700968</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
