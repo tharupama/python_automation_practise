@@ -6,7 +6,7 @@ from datetime import datetime
 
 logging.basicConfig( # describe how logging work
     level=logging.INFO,
-    format="%(asctime)s - %levelname)s - %(message)s",#assci time, level name, actual message
+    format="%(asctime)s - %(levelname)s - %(message)s",#assci time, level name, actual message
     handlers =[
         logging.FileHandler("file_organize.log"),# saves the logging information file named file_organize.log
         logging.StreamHandler()# show logs in console
@@ -43,7 +43,7 @@ def organize_files(sourse_dir, organize_by="category"):
         return
 
     files = [f for f in os.listdir(sourse_dir)#list every thing in directore both files and folders.Example output: ['photo.jpg', 'Documents', 'video.mp4', 'Music']
-             if os.path.isfile(os.path.join(sourse_dir, f))]#combine directory path with the file name to cteate full path and check if its a file
+             if os.path.isfile(os.path.join(sourse_dir, f))]#combine directory path with the file name to cteate full path and check if it's a file
 
             # issella ekin eka f walata assign karanawa if condition ekak dala chek karana nisa. ita passe file kiyanekata include wenne directory
             # ekayi ara namayi ekathu karama full patheka file path ekaknam witharayi.
@@ -76,18 +76,18 @@ def organize_by_category(sourse_dir, files):
         _, extension = os.path.splitext(file)
         category = get_category(extension)
 
-        dest_path = os.path.join(sourse_dir, category)
+        dest_dir = os.path.join(sourse_dir, category)
         dest_path = os.path.join(dest_dir, file)
 
         try:
             if os.path.exists(dest_path):
-                base,ext = os.path.splittext(file)
-                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                base,ext = os.path.splitext(file)
+                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")#convert current date and time to string formatted time
                 new_filename = f"{base}_{timestamp}{ext}"
                 dest_path = os.path.join(dest_dir, new_filename)
 
-                shutil.move(file_path, dest_path)
-                logger.info(f"Moved {file} to {category} folder")
+            shutil.move(file_path, dest_path)
+            logger.info(f"Moved {file} to {category} folder")
         except Exception as e:
             logger.error(f"Error moving file {file}: {str(e)}")
 
@@ -95,28 +95,29 @@ def organize_by_extension(sourse_dir, files):
     extention = set()
     for file in files:
         _, ext = os.path.splitext(file)
-        if ext:
+        if ext:# check exists
             extention.add(ext.lower())
-    for ext in extentions:
-        ext_folder = os.path.join(sourse_dir, ext[1:])#remove dot from extension
+    for ext in extention:
+        ext_folder = os.path.join(sourse_dir, ext[1:])#remove dot from extension(remove first symbol or letter.)
         if not os.path.exists(ext_folder):
-            os.makedir(ext_folder)
+            os.makedirs(ext_folder)
 
     for file in files:
-        file_path = os.path.join(sourse_dir, file)
+        file_path = os.path.join(sourse_dir, file)#file eka dan thiyena path eka
         _, ext = os.path.splitext(file)
         if ext:
-             ext_folder = os.path.join(sourse_dir, ext[1:])
-             dest_path = os.path.join(ext_folder, file)
+             ext_folder = os.path.join(sourse_dir, ext[1:])#file eka yanna one folder eke destination eka
+             dest_path = os.path.join(ext_folder, file)#file eka yanna one path eka(file eka thiyenna one widiya )
 
              try:
-                 if os.path.exists(dest_path):
+                 if os.path.exists(dest_path):#ekama file eka overwrite weneka nawaththanna
                      base, ext_part = os.path.splitext(file)
                      timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
                      new_filename = f'{base}_{timestamp}{ext_part}'
                      dest_path = os.path.join(ext_folder, new_filename)
 
-                 shutil.move(file_path, dest_path)
+                 shutil.move(file_path, dest_path)#file eka athule thiyenawanam date eka add nokarapu, date ekak add karala nama wenas karanawa ita passe thamayi move wenne
+                 #file ekak e weddi date add karala thibboth witharak aye add wenne na date add karala nothibboth thamayi date addwela nama wenas wenne.
                  logger.info(f"Moved {file} to {ext[1:]} folder")
              except Exception as e:
                     logger.error(f"Error moving file {file}: {str(e)}")
@@ -126,7 +127,8 @@ def organize_by_date(sourse_dir, files):
         file_path = os.path.join(sourse_dir, file)
 
         creation_time = os.path.getctime(file_path)
-        date_obj = datetime.fromtimestamp(creation_time)
+        date_obj = datetime.fromtimestamp(creation_time)#fromtimestamp convert unix timestamp into readable date and time.(hadapu dawese idan ththpara walin enne default)
+        #datetime kiyana class eken thamayi ganne ekayi datetime.
         date_folder = date_obj.strftime("%Y-%m-%d")
 
         date_dir = os.path.join(sourse_dir, date_folder)
@@ -151,19 +153,27 @@ def search_files(directory, search_term, search_by="name"):
         logger.error(f"The directory {directory} does not exist.")
         return []
     matching_files = []
-    for root, dirs, files in os.walk(directory):
+    for root, dirs, files in os.walk(directory):#(kamathi variable ekak ganna puluwan)
+        #root - current directory path
+        #dirs - list of sub directory in current directory
+        #files - list of file names in current directory
+
+        #palaweni watedi directory eke path eka root ekata, dirs ekata directory eke thiyena folders tika array ekak widiyata
+        #files waladi folder eken eliye thiyena file tika files kiyanekata array ekak widiyata assign wenawa.
+
+        #devini eke idala dirs eka his mokada root ekata dirs ekin eka add wenawa ethakota dirs eka athule file tika files ekata assign wenawa.
         for file in files:
             file_path = os.path.join(root, file)
 
             if search_by == "name":
-                if search_term.lower() in file.lower():
+                if search_term.lower() in file.lower():#convert both filename and search term lower case
                     matching_files.append(file_path)
             elif search_by == "extension":
                 _, ext = os.path.splitext(file)
                 if search_term.lower() in ext.lower():
                     matching_files.append(file_path)
 
-                elif search_by == "content":
+            elif search_by == "content":
                     try:
                         with open(file_path, 'r', errors='ignore') as f:
                             content = f.read()
@@ -176,12 +186,12 @@ def search_files(directory, search_term, search_by="name"):
 
 
 def main():
-    current_directory = os.getcwd()
-    target_directory = current_dir
+    current_dir = os.getcwd()
+    target_dir = current_dir
 
     print("file organizer script")
     print("==========")
-    print(f"Target directory :{target_directory}")
+    print(f"Target directory :{target_dir}")
     print()
 
     print("searching for files...")
@@ -198,8 +208,8 @@ def main():
     print()
     print("organization completed! check log in your terminal")
 
-    if __name__ == "__main__":
-        main()
+if __name__ == "__main__":
+    main()
 
 
 
